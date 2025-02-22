@@ -1,5 +1,4 @@
-const {Ship, Gameboard} = require('./structure');
-
+const {Ship, Gameboard, Player} = require('./structure');
 
 describe('test the Ship class', () => {
     test('ship', () => {
@@ -40,5 +39,18 @@ describe('test the Gameboard class', () => {
     });
 });
 
+describe('test the Player class', () => {
+    test('player', () => {
+        const player1 = new Player(); //real
+        const player2 = new Player(true); //computer
+        
+        expect(player1.board).toBeInstanceOf(Gameboard);
+        expect(player1.isComputer).toBe(false);
+
+        expect(player2.board).toBeInstanceOf(Gameboard);
+        expect(player2.isComputer).toBe(true);
+
+    });
+});
 
 
