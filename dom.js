@@ -20,7 +20,6 @@ for(let i = 0; i < 100; i++){
     square2List.push(square2);
 }
 
-
 let player1, player2;
 let currentPlayer;
 
@@ -52,24 +51,36 @@ newGame.addEventListener('click', (event) => {
     player2.board.placeShip(ship6, [[7,7], [7,8]]);
     
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
+    currentPlayer = player1;
+});
 
-    square2List.forEach((square, index) => {
-        square.addEventListener('click', function handleAttack() {
-            const row = Math.floor(index / 10);
-            const col = index % 10;
-            
-            player2.board.receiveAttack(row, col);
+function switchPlayer(){
+    currentPlayer = (currentPlayer === player1) ? player2 : player1;
 
-            if(square.dataset.visited)return;
-            square.dataset.visited = 'true';
-    
-            if(square.dataset.ship){
-                square.textContent = "💥";
-            }else{
-                square.textContent = "❌";
-            }
-        })
-    })
+    if(currentPlayer === player2){
+        setTimeout(computerMove, 500);
+    }
+};
+
+
+square2List.forEach((square, index) => {
+    square.addEventListener('click', function handleAttack() {
+        const row = Math.floor(index / 10);
+        const col = index % 10;
+        
+        player2.board.receiveAttack(row, col);
+
+        if(square.dataset.visited)return;
+        square.dataset.visited = 'true';
+
+        if(square.dataset.ship){
+            square.textContent = "💥";
+        }else{
+            square.textContent = "❌";
+        }
+        
+        switchPlayer();
+    });
 });
 
 
