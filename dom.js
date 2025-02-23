@@ -1,4 +1,5 @@
 import {Ship, Gameboard, Player} from "./structure.js";
+import { showShip } from "./render.js";
 
 const newGame = document.getElementById('newGame');
 const board1 = document.querySelector('.board1');
@@ -38,6 +39,7 @@ newGame.addEventListener('click', (event) => {
     player2.board.placeShip(ship1, [[3,5], [4,5], [5,5], [6,5]]);
     player2.board.placeShip(ship3, [[5,2], [5,3]]);
     
+    showShip(player1.board.grid, player2.board.grid, square1List, square2List);
 
 });
 
