@@ -56,11 +56,12 @@ newGame.addEventListener('click', (event) => {
 
 function switchPlayer(){
     currentPlayer = (currentPlayer === player1) ? player2 : player1;
+    console.log(`It's now ${currentPlayer === player1 ? 'Player 1' : 'Player 2'}'s turn`);
 
     if(currentPlayer === player2){
         setTimeout(computerMove, 500);
     }
-};
+}
 
 function computerMove(){
     let visited = false;
@@ -86,6 +87,21 @@ function computerMove(){
 }
 
 
+function checkGameOver() {
+    if (player1.board.allSunk()) {
+        alert('Player 2 wins!');
+        resetGame();
+    } else if (player2.board.allSunk()) {
+        alert('Player 1 wins!');
+        resetGame();
+    }
+}
+
+function resetGame(){
+    location.reload();
+}
+
+
 square2List.forEach((square, index) => {
     square.addEventListener('click', function handleAttack() {
         const row = Math.floor(index / 10);
@@ -101,7 +117,7 @@ square2List.forEach((square, index) => {
         }else{
             square.textContent = "❌";
         }
-        
+        checkGameOver();
         switchPlayer();
     });
 });
