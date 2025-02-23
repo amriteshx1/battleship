@@ -1,6 +1,23 @@
 import {Ship, Gameboard, Player} from "./structure.js";
 
 const newGame = document.getElementById('newGame');
+const board1 = document.querySelector('.board1');
+const board2 = document.querySelector('.board2');
+
+const square1List = [];
+const square2List = [];
+
+for(let i = 0; i < 100; i++){
+    let square1 = document.createElement('div');
+    square1.className = 'square1';
+    board1.append(square1);
+    square1List.push(square1);
+
+    let square2 = document.createElement('div');
+    square2.className = 'square2';
+    board2.append(square2);
+    square2List.push(square2);
+}
 
 
 newGame.addEventListener('click', (event) => {
