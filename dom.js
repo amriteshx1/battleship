@@ -62,6 +62,29 @@ function switchPlayer(){
     }
 };
 
+function computerMove(){
+    let visited = false;
+
+    while(!visited){
+        const row = Math.floor(Math.random() * 10);
+        const col = Math.floor(Math.random() * 10);
+        const square = square1List[row * 10 + col];
+
+        if(!square.dataset.visited){
+            player1.board.receiveAttack(row, col);
+            square.dataset.visited = 'true';
+
+            if(square.dataset.ship){
+                square.textContent = "💥";
+            }else{
+                square.textContent = "❌";
+            }
+            visited = true;
+            switchPlayer();
+        }
+    }
+}
+
 
 square2List.forEach((square, index) => {
     square.addEventListener('click', function handleAttack() {
