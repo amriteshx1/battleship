@@ -27,6 +27,23 @@ let currentPlayer;
 let playerShips = [];
 let shipSizes = [4, 3, 3, 2, 2, 1]; 
 
+board2.classList.add("disabled-board"); // 🔴 Disable Board 2 at Start
+
+alert(
+    "Welcome to Battleship! 🎯\n\n" +
+    "Place your ships by clicking on the squares."
+);
+
+alert(
+    "Ship sizes (horizontal continuous placement):\n" +
+    "[4, 3, 3, 2, 2, 1] \n\n" +
+
+    "1st click: 4-block\n" +
+    "2nd & 3rd click: 3-blocks\n" +
+    "4th & 5th click: 2-blocks\n" +
+    "Last click: 1-block\n\n" +
+    "Let the battle begin! 🚢"
+);
 
 square1List.forEach((square, index) => {
     square.addEventListener("click", function () {
@@ -94,7 +111,6 @@ function placeComputerShips() {
 }
 
 
-
 newGame.addEventListener('click', (event) => {
     event.preventDefault();
 
@@ -106,7 +122,7 @@ newGame.addEventListener('click', (event) => {
     board1.classList.add("disabled-board");
     board2.classList.remove("disabled-board");
 
-    placeComputerShips();
+    placeComputerShips(); 
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
 
     currentPlayer = player1;
@@ -193,5 +209,4 @@ square2List.forEach((square, index) => {
         setTimeout(switchPlayer, 500);
     });
 });
-
 
