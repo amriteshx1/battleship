@@ -56,7 +56,6 @@ newGame.addEventListener('click', (event) => {
 
 function switchPlayer(){
     currentPlayer = (currentPlayer === player1) ? player2 : player1;
-    console.log(`It's now ${currentPlayer === player1 ? 'Player 1' : 'Player 2'}'s turn`);
 
     if(currentPlayer === player2){
         setTimeout(computerMove, 500);
@@ -76,12 +75,14 @@ function computerMove(){
             square.dataset.visited = 'true';
 
             if(square.dataset.ship){
-                square.textContent = "💥";
+                square.textContent = "🔥";
+                square.style.backgroundColor = 'red';
             }else{
                 square.textContent = "❌";
+                square.style.backgroundColor = 'blue';
             }
             visited = true;
-            switchPlayer();
+            setTimeout(switchPlayer, 500);
         }
     }
 }
@@ -104,21 +105,24 @@ function resetGame(){
 
 square2List.forEach((square, index) => {
     square.addEventListener('click', function handleAttack() {
+
+        if(square.dataset.visited)return;
+
         const row = Math.floor(index / 10);
         const col = index % 10;
         
         player2.board.receiveAttack(row, col);
-
-        if(square.dataset.visited)return;
         square.dataset.visited = 'true';
 
         if(square.dataset.ship){
-            square.textContent = "💥";
+            square.textContent = "🔥";
+            square.style.backgroundColor = 'red';
         }else{
             square.textContent = "❌";
+            square.style.backgroundColor = 'blue';
         }
         checkGameOver();
-        switchPlayer();
+        setTimeout(switchPlayer, 500);
     });
 });
 
