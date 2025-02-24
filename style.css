@@ -7,36 +7,46 @@
     height: 100vh;
     width: 100vw;
     box-sizing: border-box;
-    padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 15px;
+    gap: 35px;
     font-family: serif;
+    background-color: oklch(0.398 0.195 277.366);
 }
+
+h1{
+    background-color:oklch(0.257 0.09 281.288);
+    color:oklch(0.93 0.034 272.788);
+    height: 4rem;
+    line-height: 4rem;
+    width: 100%;
+    text-align: center;
+}
+
 #newGame{
-    height: 40px;
-    width: 130px;
-    background-color: blueviolet;
-    color: aliceblue;
-    border-radius: 8px;
+    height: 50px;
+    width: 180px;
+    background-color: oklch(0.359 0.144 278.697);
+    color: oklch(0.93 0.034 272.788);
+    border-radius: 10px;
     font-family: inherit;
-    font-size: larger;
-    font-weight: 350;
+    font-size: 25px;
+    font-weight: bolder;
     cursor: pointer;
 }
 .gameboard{
-    height: 80vh;
-    width: 80vw;
+    height: 60vh;
+    width: 60vw;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10%;
 }
 .board1, .board2{
-    height: 450px;
-    width: 450px;
+    height: 100%;
+    width: 45%;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     grid-template-rows: repeat(10, 1fr);
@@ -45,5 +55,8 @@
     border: 1px solid black;
     height: 100%;
     width: 100%;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: oklch(0.785 0.115 274.713);
 }

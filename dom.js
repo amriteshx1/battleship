@@ -86,7 +86,7 @@ function computerMove(){
                 square.style.backgroundColor = 'red';
             }else{
                 square.textContent = "❌";
-                square.style.backgroundColor = 'blue';
+                square.style.backgroundColor = 'oklch(0.879 0.169 91.605)';
             }
             visited = true;
             setTimeout(switchPlayer, 500);
@@ -96,15 +96,13 @@ function computerMove(){
 
 
 function checkGameOver() {
-    setTimeout(() => {
-        if (player1.board.allSunk()) {
-            alert('Player 2 wins!');
-            resetGame();
-        } else if (player2.board.allSunk()) {
-            alert('Player 1 wins!');
-            resetGame();
-        }
-    }, 200);
+    if (player1.board.allSunk()) {
+        alert('Player 2 wins!');
+        resetGame();
+    } else if (player2.board.allSunk()) {
+        alert('Player 1 wins!');
+        resetGame();
+    }
 }
 
 function resetGame(){
@@ -128,7 +126,7 @@ square2List.forEach((square, index) => {
             square.style.backgroundColor = 'red';
         }else{
             square.textContent = "❌";
-            square.style.backgroundColor = 'blue';
+            square.style.backgroundColor = 'oklch(0.879 0.169 91.605)';
         }
         checkGameOver();
         setTimeout(switchPlayer, 500);
