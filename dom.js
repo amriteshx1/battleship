@@ -36,6 +36,13 @@ newGame.addEventListener('click', (event) => {
     const ship5 = new Ship(1);
     const ship6 = new Ship(2);
 
+    const ship7 = new Ship(4);
+    const ship8 = new Ship(3);
+    const ship9 = new Ship(2);
+    const ship10 = new Ship(3);
+    const ship11 = new Ship(1);
+    const ship12 = new Ship(2);
+
     player1.board.placeShip(ship1, [[2,3], [2,4], [2,5], [2,6]]);
     player1.board.placeShip(ship3, [[7,7], [7,8]]);
     player1.board.placeShip(ship2, [[4,3],[5,3],[6,3]]);
@@ -43,12 +50,12 @@ newGame.addEventListener('click', (event) => {
     player1.board.placeShip(ship5, [[0,7]]);
     player1.board.placeShip(ship6, [[5,8], [5,9]]);
 
-    player2.board.placeShip(ship2, [[8,3], [8,4], [8,5]]);
-    player2.board.placeShip(ship1, [[2,7], [3,7], [4,7], [5,7]]);
-    player2.board.placeShip(ship3, [[5,2], [5,3]]);
-    player2.board.placeShip(ship4, [[0,4], [1,4], [2,4]]);
-    player2.board.placeShip(ship5, [[9,8]]);
-    player2.board.placeShip(ship6, [[7,7], [7,8]]);
+    player2.board.placeShip(ship8, [[8,3], [8,4], [8,5]]);
+    player2.board.placeShip(ship7, [[2,7], [3,7], [4,7], [5,7]]);
+    player2.board.placeShip(ship9, [[5,2], [5,3]]);
+    player2.board.placeShip(ship10, [[0,4], [1,4], [2,4]]);
+    player2.board.placeShip(ship11, [[9,8]]);
+    player2.board.placeShip(ship12, [[7,7], [7,8]]);
     
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
     currentPlayer = player1;
@@ -89,13 +96,15 @@ function computerMove(){
 
 
 function checkGameOver() {
-    if (player1.board.allSunk()) {
-        alert('Player 2 wins!');
-        resetGame();
-    } else if (player2.board.allSunk()) {
-        alert('Player 1 wins!');
-        resetGame();
-    }
+    setTimeout(() => {
+        if (player1.board.allSunk()) {
+            alert('Player 2 wins!');
+            resetGame();
+        } else if (player2.board.allSunk()) {
+            alert('Player 1 wins!');
+            resetGame();
+        }
+    }, 200);
 }
 
 function resetGame(){
