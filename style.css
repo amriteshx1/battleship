@@ -23,6 +23,7 @@ h1{
     line-height: 4rem;
     width: 100%;
     text-align: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 #newGame{
@@ -35,10 +36,11 @@ h1{
     font-size: 25px;
     font-weight: bolder;
     cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 .gameboard{
     height: 60vh;
-    width: 60vw;
+    width: 70vw;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,7 +54,7 @@ h1{
     grid-template-rows: repeat(10, 1fr);
 }
 .square1, .square2{
-    border: 1px solid black;
+    border: 1px solid oklch(0.257 0.09 281.288);
     height: 100%;
     width: 100%;
     display: flex;
@@ -60,9 +62,24 @@ h1{
     align-items: center;
     background-color: oklch(0.785 0.115 274.713);
 }
-
+.txt{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    font-family: inherit;
+    font-size: 30px;
+    font-weight: bolder;
+    color:oklch(0.93 0.034 272.788);
+}
 .disabled-board {
     pointer-events: none;
     opacity: 0.5; 
     background-color: lightgray;
 }
+.board1:not(.disabled-board),
+.board2:not(.disabled-board) {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5), 
+                0 6px 12px rgba(0, 0, 0, 0.4) inset;
+}
+
+/* All the box-shadow effects are done using chatgpt for now as it's out of my knowledge scope rn but i wanted to make the UI better so... */
