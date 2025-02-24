@@ -71,7 +71,10 @@ square1List.forEach((square, index) => {
             });
 
             if (playerShips.length === shipSizes.length) {
-                alert("All ships placed. Click Start game below!");
+
+                setTimeout(() => {
+                    alert("All ships placed. Click 'Start Game' below!");
+                }, 100);
             }
         }
     });
@@ -170,15 +173,22 @@ function computerMove(){
 
 function checkGameOver() {
     if (player1.board.allSunk()) {
-        alert('Computer wins! \n' +
-            '(Click ok for another game)'
-        );
-        resetGame();
+
+        setTimeout(() => {
+            alert('Computer wins! 😶‍🌫️🎉 \n\n' +
+                '(Click ok for another game)'
+            );
+            resetGame();
+        }, 100);
+
     } else if (player2.board.allSunk()) {
-        alert('Player wins! \n' +
-            '(Click ok for another game)'
-        );
-        resetGame();
+
+        setTimeout(() => {
+            alert('Player wins! 🎉🫂 \n\n' +
+                '(Click ok for another game)'
+            );
+            resetGame();
+        }, 100);
     }
 }
 
