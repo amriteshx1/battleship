@@ -59,13 +59,19 @@ newGame.addEventListener('click', (event) => {
     
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
     currentPlayer = player1;
+    board1.classList.add("disabled-board");
 });
 
 function switchPlayer(){
-    currentPlayer = (currentPlayer === player1) ? player2 : player1;
-
-    if(currentPlayer === player2){
+    if (currentPlayer === player1) {
+        board2.classList.add("disabled-board"); 
+        board1.classList.remove("disabled-board");
+        currentPlayer = player2;
         setTimeout(computerMove, 500);
+    } else {
+        board1.classList.add("disabled-board"); 
+        board2.classList.remove("disabled-board");
+        currentPlayer = player1;
     }
 }
 

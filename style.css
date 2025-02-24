@@ -60,3 +60,9 @@ h1{
     align-items: center;
     background-color: oklch(0.785 0.115 274.713);
 }
+
+.disabled-board {
+    pointer-events: none;
+    opacity: 0.5; 
+    background-color: lightgray;
+}
