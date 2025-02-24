@@ -21,43 +21,61 @@ for(let i = 0; i < 100; i++){
 }
 
 let player1, player2;
+player1 = new Player();
+player2 = new Player(true);
 let currentPlayer;
+let playerShips = [];
+let shipSizes = [4, 3, 3, 2, 2, 1]; 
+
+
+square1List.forEach((square, index) => {
+    square.addEventListener("click", function () {
+        if (playerShips.length >= shipSizes.length) return;
+
+        let row = Math.floor(index / 10);
+        let col = index % 10;
+
+        if (!square.dataset.ship) {
+            let shipSize = shipSizes[playerShips.length];
+            let shipCoords = [];
+
+            for (let i = 0; i < shipSize; i++) {
+                if (col + i >= 10 || square1List[row * 10 + col + i].dataset.ship) return;
+                shipCoords.push([row, col + i]);
+            }
+
+            let newShip = new Ship(shipSize);
+            playerShips.push(newShip);
+            player1.board.placeShip(newShip, shipCoords);
+
+            shipCoords.forEach(([r, c]) => {
+                square1List[r * 10 + c].dataset.ship = "true";
+                square1List[r * 10 + c].style.backgroundColor = "gray";
+            });
+
+            if (playerShips.length === shipSizes.length) {
+                alert("All ships placed. Click Start game below!");
+            }
+        }
+    });
+});
+
+
 
 newGame.addEventListener('click', (event) => {
     event.preventDefault();
 
-    player1 = new Player();
-    player2 = new Player(true);
+    if (playerShips.length < shipSizes.length) {
+        alert("Place all your ships first!");
+        return;
+    }
 
-    const ship1 = new Ship(4);
-    const ship2 = new Ship(3);
-    const ship3 = new Ship(2);
-    const ship4 = new Ship(3);
-    const ship5 = new Ship(1);
-    const ship6 = new Ship(2);
+    board1.classList.add("disabled-board");
+    board2.classList.remove("disabled-board");
 
-    const ship7 = new Ship(4);
-    const ship8 = new Ship(3);
-    const ship9 = new Ship(2);
-    const ship10 = new Ship(3);
-    const ship11 = new Ship(1);
-    const ship12 = new Ship(2);
-
-    player1.board.placeShip(ship1, [[2,3], [2,4], [2,5], [2,6]]);
-    player1.board.placeShip(ship3, [[7,7], [7,8]]);
-    player1.board.placeShip(ship2, [[4,3],[5,3],[6,3]]);
-    player1.board.placeShip(ship4, [[9,3], [9,4], [9,5]]);
-    player1.board.placeShip(ship5, [[0,7]]);
-    player1.board.placeShip(ship6, [[5,8], [5,9]]);
-
-    player2.board.placeShip(ship8, [[8,3], [8,4], [8,5]]);
-    player2.board.placeShip(ship7, [[2,7], [3,7], [4,7], [5,7]]);
-    player2.board.placeShip(ship9, [[5,2], [5,3]]);
-    player2.board.placeShip(ship10, [[0,4], [1,4], [2,4]]);
-    player2.board.placeShip(ship11, [[9,8]]);
-    player2.board.placeShip(ship12, [[7,7], [7,8]]);
-    
+    placeComputerShips(); //will implement it in future
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
+
     currentPlayer = player1;
     board1.classList.add("disabled-board");
 });
@@ -67,7 +85,7 @@ function switchPlayer(){
         board2.classList.add("disabled-board"); 
         board1.classList.remove("disabled-board");
         currentPlayer = player2;
-        setTimeout(computerMove, 500);
+        setTimeout(computerMove, 1000);
     } else {
         board1.classList.add("disabled-board"); 
         board2.classList.remove("disabled-board");
@@ -103,10 +121,14 @@ function computerMove(){
 
 function checkGameOver() {
     if (player1.board.allSunk()) {
-        alert('Player 2 wins!');
+        alert('Computer wins! \n' +
+            '(Click ok for another game)'
+        );
         resetGame();
     } else if (player2.board.allSunk()) {
-        alert('Player 1 wins!');
+        alert('Player wins! \n' +
+            '(Click ok for another game)'
+        );
         resetGame();
     }
 }
