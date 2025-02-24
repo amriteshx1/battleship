@@ -60,6 +60,39 @@ square1List.forEach((square, index) => {
     });
 });
 
+function placeComputerShips() {
+    let shipSizes = [4, 3, 3, 2, 2, 1];
+
+    shipSizes.forEach((size) => {
+        let placed = false;
+
+        while (!placed) {
+            let row = Math.floor(Math.random() * 10);
+            let col = Math.floor(Math.random() * (10 - size));
+            let shipCoords = [];
+            let canPlace = true;
+
+            for (let i = 0; i < size; i++) {
+                if (player2.board.grid[row][col + i] !== null) {
+                    canPlace = false;
+                    break;
+                }
+                shipCoords.push([row, col + i]);
+            }
+
+            if (canPlace) {
+                let newShip = new Ship(size);
+                player2.board.placeShip(newShip, shipCoords);
+                placed = true;
+
+                shipCoords.forEach(([r, c]) => {
+                    square2List[r * 10 + c].style.backgroundColor = "gray"; 
+                });
+            }
+        }
+    });
+}
+
 
 
 newGame.addEventListener('click', (event) => {
@@ -73,7 +106,7 @@ newGame.addEventListener('click', (event) => {
     board1.classList.add("disabled-board");
     board2.classList.remove("disabled-board");
 
-    placeComputerShips(); //will implement it in future
+    placeComputerShips();
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
 
     currentPlayer = player1;
