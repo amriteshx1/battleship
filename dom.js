@@ -73,6 +73,9 @@ function placeShipsRandomly(board, ships, squareList) {
 placeShipsRandomly(player1.board, playerShips, square1List);
 placeShipsRandomly(player2.board, computerShips, square2List);
 
+alert("Welcome to Battleship! 🎯\n\nShips placed automatically! Click 'Start Game' to begin.");
+
+
 
 newGame.addEventListener('click', (event) => {
     event.preventDefault();
@@ -98,29 +101,68 @@ function switchPlayer(){
     }
 }
 
-function computerMove(){
+//the idea and logic thought process behind this enhanced intelligence of Computer's move was of mine ->
+// -> but the code implementation wouldn't have been this polished without the help of GPT.
+// ------------------------------------------------------------------------------------------
+// -> (Will surely improvise it on my own in future.)
+
+let hitQueue = [];
+
+function computerMove() {
     let visited = false;
 
-    while(!visited){
-        const row = Math.floor(Math.random() * 10);
-        const col = Math.floor(Math.random() * 10);
+    while (!visited) {
+        let row, col;
+
+        // Remove already visited positions from hitQueue
+        hitQueue = hitQueue.filter(([r, c]) => !square1List[r * 10 + c].dataset.visited);
+
+        if (hitQueue.length > 0) {
+            [row, col] = hitQueue.shift();
+        } else {
+            do {
+                row = Math.floor(Math.random() * 10);
+                col = Math.floor(Math.random() * 10);
+            } while (square1List[row * 10 + col].dataset.visited);
+        }
+
         const square = square1List[row * 10 + col];
 
-        if(!square.dataset.visited){
+        if (!square.dataset.visited) {
             player1.board.receiveAttack(row, col);
             square.dataset.visited = 'true';
 
-            if(square.dataset.ship){
+            if (square.dataset.ship) {
                 square.textContent = "🔥";
                 square.style.backgroundColor = 'red';
-            }else{
+                addAdjacentTargets(row, col);
+            } else {
                 square.textContent = "❌";
                 square.style.backgroundColor = 'oklch(0.879 0.169 91.605)';
             }
+
             visited = true;
             setTimeout(switchPlayer, 500);
         }
     }
+}
+
+function addAdjacentTargets(row, col) {
+    const directions = [
+        [row - 1, col], // Up
+        [row + 1, col], // Down
+        [row, col - 1], // Left
+        [row, col + 1]  // Right
+    ];
+
+    directions.forEach(([r, c]) => {
+        if (r >= 0 && r < 10 && c >= 0 && c < 10) {
+            let targetSquare = square1List[r * 10 + c];
+            if (!targetSquare.dataset.visited) {
+                hitQueue.push([r, c]);
+            }
+        }
+    });
 }
 
 function checkGameOver() {
