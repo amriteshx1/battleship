@@ -72,7 +72,9 @@ function placeShipsRandomly(board, ships, squareList) {
 placeShipsRandomly(player1.board, playerShips, square1List);
 placeShipsRandomly(player2.board, computerShips, square2List);
 
-alert("Welcome to Battleship! ⚔️🔥\n\nYour fleet is ready, and ships are placed automatically! Click 'Start Game' to unleash war on the high seas! 🌊💣");
+
+alert("Welcome to Battleship! ⚔️🔥\n\nYour fleet is ready, and ships are placed automatically!\n\n Click 'Start Game' to unleash war on the high seas! 🌊💣");
+
 
 
 
