@@ -134,7 +134,7 @@ function computerMove() {
 
             if (square.dataset.ship) {
                 square.textContent = "🔥";
-                square.style.backgroundColor = 'red';
+                square.style.backgroundColor = '#00008B';
                 addAdjacentTargets(row, col);
             } else {
                 square.textContent = "❌";
@@ -204,7 +204,7 @@ square2List.forEach((square, index) => {
 
         if(square.dataset.ship){
             square.textContent = "🔥";
-            square.style.backgroundColor = 'red';
+            square.style.backgroundColor = '#00008B';
         }else{
             square.textContent = "❌";
             square.style.backgroundColor = 'oklch(0.879 0.169 91.605)';

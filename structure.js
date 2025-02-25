@@ -45,4 +45,5 @@ class Player{
     };
 };
 
-module.exports = {Ship, Gameboard, Player};
+// module.exports = {Ship, Gameboard, Player}; (FOR RUNNING TESTS! WILL MODIFY IT IN FUTURE FOR BETTER PROJECT INTEGRATION)
+export {Ship, Gameboard, Player};
