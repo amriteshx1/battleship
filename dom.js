@@ -20,116 +20,69 @@ for(let i = 0; i < 100; i++){
     square2List.push(square2);
 }
 
-let player1, player2;
-player1 = new Player();
-player2 = new Player(true);
+
+let player1 = new Player();
+let player2 = new Player(true);
 let currentPlayer;
 let playerShips = [];
+let computerShips = [];
 let shipSizes = [4, 3, 3, 2, 2, 1]; 
 
-board2.classList.add("disabled-board"); // 🔴 Disable Board 2 at Start
+board2.classList.add("disabled-board"); //Disable Board 2 at Start
 
-alert(
-    "Welcome to Battleship! 🎯\n\n" +
-    "Place your ships by clicking on the squares."
-);
+function placeShipsRandomly(board, ships, squareList) {
+    ships.length = 0;
 
-alert(
-    "Ship sizes (horizontal continuous placement):\n" +
-    "[4, 3, 3, 2, 2, 1] \n\n" +
-
-    "1st click: 4-block\n" +
-    "2nd & 3rd click: 3-blocks\n" +
-    "4th & 5th click: 2-blocks\n" +
-    "Last click: 1-block\n\n" +
-    "Let the battle begin! 🚢"
-);
-
-square1List.forEach((square, index) => {
-    square.addEventListener("click", function () {
-        if (playerShips.length >= shipSizes.length) return;
-
-        let row = Math.floor(index / 10);
-        let col = index % 10;
-
-        if (!square.dataset.ship) {
-            let shipSize = shipSizes[playerShips.length];
-            let shipCoords = [];
-
-            for (let i = 0; i < shipSize; i++) {
-                if (col + i >= 10 || square1List[row * 10 + col + i].dataset.ship) return;
-                shipCoords.push([row, col + i]);
-            }
-
-            let newShip = new Ship(shipSize);
-            playerShips.push(newShip);
-            player1.board.placeShip(newShip, shipCoords);
-
-            shipCoords.forEach(([r, c]) => {
-                square1List[r * 10 + c].dataset.ship = "true";
-                square1List[r * 10 + c].style.backgroundColor = "gray";
-            });
-
-            if (playerShips.length === shipSizes.length) {
-
-                setTimeout(() => {
-                    alert("All ships placed. Click 'Start Game' below!");
-                }, 100);
-            }
-        }
-    });
-});
-
-function placeComputerShips() {
-    let shipSizes = [4, 3, 3, 2, 2, 1];
-
-    shipSizes.forEach((size) => {
+    shipSizes.forEach((shipSize) => {
         let placed = false;
 
         while (!placed) {
             let row = Math.floor(Math.random() * 10);
-            let col = Math.floor(Math.random() * (10 - size));
+            let col = Math.floor(Math.random() * 10);
+            let isHorizontal = Math.random() < 0.5;
             let shipCoords = [];
-            let canPlace = true;
 
-            for (let i = 0; i < size; i++) {
-                if (player2.board.grid[row][col + i] !== null) {
-                    canPlace = false;
-                    break;
-                }
-                shipCoords.push([row, col + i]);
+            for (let i = 0; i < shipSize; i++) {
+                let r = isHorizontal ? row : row + i;
+                let c = isHorizontal ? col + i : col;
+
+                if (r >= 10 || c >= 10 || squareList[r * 10 + c].dataset.ship) break;
+
+                shipCoords.push([r, c]);
             }
 
-            if (canPlace) {
-                let newShip = new Ship(size);
-                player2.board.placeShip(newShip, shipCoords);
-                placed = true;
+            if (shipCoords.length === shipSize) {
+                let newShip = new Ship(shipSize);
+                ships.push(newShip);
+                board.placeShip(newShip, shipCoords);
 
                 shipCoords.forEach(([r, c]) => {
-                    square2List[r * 10 + c].style.backgroundColor = "gray"; 
+                    squareList[r * 10 + c].dataset.ship = "true";
+                    squareList[r * 10 + c].style.backgroundColor = "gray";
+                    // if (squareList === square1List) {
+                    //     squareList[r * 10 + c].style.backgroundColor = "gray";
+                    // }
                 });
+
+                placed = true;
             }
         }
     });
 }
 
+placeShipsRandomly(player1.board, playerShips, square1List);
+placeShipsRandomly(player2.board, computerShips, square2List);
+
 
 newGame.addEventListener('click', (event) => {
     event.preventDefault();
 
-    if (playerShips.length < shipSizes.length) {
-        alert("Place all your ships first!");
-        return;
-    }
-
     board1.classList.add("disabled-board");
     board2.classList.remove("disabled-board");
 
-    placeComputerShips(); 
     showShip(player1.board.grid, player2.board.grid, square1List, square2List);
 
     currentPlayer = player1;
-    board1.classList.add("disabled-board");
 });
 
 function switchPlayer(){
@@ -169,7 +122,6 @@ function computerMove(){
         }
     }
 }
-
 
 function checkGameOver() {
     if (player1.board.allSunk()) {
