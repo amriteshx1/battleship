@@ -58,10 +58,9 @@ function placeShipsRandomly(board, ships, squareList) {
 
                 shipCoords.forEach(([r, c]) => {
                     squareList[r * 10 + c].dataset.ship = "true";
-                    squareList[r * 10 + c].style.backgroundColor = "gray";
-                    // if (squareList === square1List) {
-                    //     squareList[r * 10 + c].style.backgroundColor = "gray";
-                    // }
+                    if (squareList === square1List) {
+                        squareList[r * 10 + c].style.backgroundColor = "gray";
+                    }
                 });
 
                 placed = true;
